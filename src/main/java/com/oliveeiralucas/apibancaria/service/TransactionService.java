@@ -58,9 +58,9 @@ public class TransactionService {
 
     //método estático
     private static boolean isTransactionValid(Transaction transaction, Wallet payer) {
-        return payer.type() == WalletType.COMUM.getWalletType()  // Verifica se o tipo de carteira do pagador é comum
-                && payer.balance().compareTo(transaction.value()) >= 0 // Verifica se o saldo do pagador é suficiente
-                && !payer.id().equals(transaction.payee()); // Verifica se o pagador não é ele mesmo
+        return payer.getType() == WalletType.COMUM.getWalletType()  // Verifica se o tipo de carteira do pagador é comum
+                && payer.getBalance().compareTo(transaction.value()) >= 0 // Verifica se o saldo do pagador é suficiente
+                && !payer.getId().equals(transaction.payee()); // Verifica se o pagador não é ele mesmo
     }
 
     //retorna lista de transações
