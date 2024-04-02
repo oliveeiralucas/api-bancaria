@@ -63,7 +63,9 @@ public class Wallet { // Classe Wallet como record para imutabilidade
     public void setPassword(String password) {
         this.password = password;
     }
-    //como estou utilizando um record, preciso instanciar novamente o objeto, caso eu queira mudar um campo
+    public void setEmail(String email){ this.email = email;}
+    public void setType(int type) { this.type = type;}
+
     public Wallet debit(BigDecimal value) {
         return new Wallet(id, fullName, cpf, email, password, type, balance.subtract(value));
     }
@@ -71,4 +73,5 @@ public class Wallet { // Classe Wallet como record para imutabilidade
     public Wallet credit(BigDecimal value) {
         return new Wallet(id, fullName, cpf, email, password, type, balance.add(value));
     }
+
 }

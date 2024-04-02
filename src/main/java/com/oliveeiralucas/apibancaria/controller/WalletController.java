@@ -62,6 +62,14 @@ public class WalletController {
         return ResponseEntity.ok("Name changed successfully. New name: " + wallet.getFullName());
     }
 
+    @PutMapping("/{id}/email")
+    public ResponseEntity<String> changeEmail(
+            @PathVariable Long id,
+            @RequestParam String newEmail){
+        Wallet wallet = walletService.changeEmail(id, newEmail);
+        return ResponseEntity.ok("Email changed sucessfuly. New email: " + wallet.getEmail());
+    }
+
     // Endpoint para alterar senha
     @PutMapping("/{id}/password")
     public ResponseEntity<String> changePassword(
@@ -69,5 +77,13 @@ public class WalletController {
             @RequestParam String newPassword) {
         Wallet wallet = walletService.changePassword(id, newPassword);
         return ResponseEntity.ok("Password changed successfully.");
+    }
+
+    @PutMapping("/{id}/type")
+    public ResponseEntity<String> changeType(
+            @PathVariable Long id,
+            @RequestParam int newType){
+        Wallet wallet = walletService.changeType(id, newType);
+        return ResponseEntity.ok("Type changed successfully: New Type: " + wallet.getType());
     }
 }

@@ -7,6 +7,7 @@ import com.oliveeiralucas.apibancaria.repository.WalletRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -94,4 +95,27 @@ public class WalletService {
         }
     }
 
+    @Transactional
+    public Wallet changeEmail(Long walletId, String newEmail) {
+        Optional<Wallet> walletOptional = walletRepository.findById(walletId);
+        if (walletOptional.isPresent()){
+            Wallet wallet = walletOptional.get();
+            wallet.setEmail(newEmail);
+            return walletRepository.save(wallet);
+        } else {
+            throw new WalletNotFoundException("Wallet with this ID not found");
+        }
+    }
+
+    @Transactional
+    public Wallet changeType(Long Id, int newType) {
+        Optional<Wallet> walletOptional = walletRepository.findById(Id);
+        if (walletOptional.isPresent()) {
+            Wallet wallet = walletOptional.get();
+            wallet.setType(newType);
+            return walletRepository.save(wallet);
+        } else {
+            throw new WalletNotFoundException("Wallet not found with this id");
+        }
+    }
 }
