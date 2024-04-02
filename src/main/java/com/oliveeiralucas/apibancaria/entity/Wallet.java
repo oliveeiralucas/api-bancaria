@@ -1,5 +1,6 @@
 package com.oliveeiralucas.apibancaria.entity;
 
+import com.oliveeiralucas.apibancaria.enums.WalletType;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -15,8 +16,9 @@ public class Wallet { // Classe Wallet como record para imutabilidade
     String password; //senha da carteira
     int type; //tipo de carteira (mapeado no enum)
     BigDecimal balance; //saldo da carteira
+    boolean valid;
 
-    public Wallet(Long id, String fullName, String cpf, String email, String password, int type, BigDecimal balance) {
+    public Wallet(Long id, String fullName, String cpf, String email, String password, int type, BigDecimal balance, boolean valid) {
         this.id = id;
         this.fullName = fullName;
         this.cpf = cpf;
@@ -24,6 +26,7 @@ public class Wallet { // Classe Wallet como record para imutabilidade
         this.password = password;
         this.type = type;
         this.balance = balance.setScale(2);
+        this.valid = valid;
     }
 
     public Long getId() {
@@ -53,6 +56,7 @@ public class Wallet { // Classe Wallet como record para imutabilidade
     public BigDecimal getBalance() {
         return balance;
     }
+    public boolean getValid(){return valid;}
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
@@ -65,13 +69,14 @@ public class Wallet { // Classe Wallet como record para imutabilidade
     }
     public void setEmail(String email){ this.email = email;}
     public void setType(int type) { this.type = type;}
+    public void setValid(boolean valid){this.valid = valid;}
 
     public Wallet debit(BigDecimal value) {
-        return new Wallet(id, fullName, cpf, email, password, type, balance.subtract(value));
+        return new Wallet(id, fullName, cpf, email, password, type, balance.subtract(value), valid);
     }
 
     public Wallet credit(BigDecimal value) {
-        return new Wallet(id, fullName, cpf, email, password, type, balance.add(value));
+        return new Wallet(id, fullName, cpf, email, password, type, balance.add(value),valid);
     }
 
 }

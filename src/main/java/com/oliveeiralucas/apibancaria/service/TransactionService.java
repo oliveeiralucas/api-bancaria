@@ -60,7 +60,8 @@ public class TransactionService {
     private static boolean isTransactionValid(Transaction transaction, Wallet payer) {
         return payer.getType() == WalletType.COMUM.getWalletType()  // Verifica se o tipo de carteira do pagador é comum
                 && payer.getBalance().compareTo(transaction.value()) >= 0 // Verifica se o saldo do pagador é suficiente
-                && !payer.getId().equals(transaction.payee()); // Verifica se o pagador não é ele mesmo
+                && !payer.getId().equals(transaction.payee()) // Verifica se o pagador não é ele mesmo
+                && payer.getValid(); //verifica se a carteira é válida
     }
 
     //retorna lista de transações

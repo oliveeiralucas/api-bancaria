@@ -118,4 +118,24 @@ public class WalletService {
             throw new WalletNotFoundException("Wallet not found with this id");
         }
     }
+
+    public Wallet deleteUser(Long id) {
+        Optional<Wallet> walletOptional = walletRepository.findById(id);
+        if (walletOptional.isPresent()) {
+            Wallet wallet = walletOptional.get();
+            wallet.setValid(!wallet.getValid());
+            return walletRepository.save(wallet);
+        } else {
+            throw new WalletNotFoundException("Wallet not found with this id");
+        }
+    }
+
+    public Wallet findUserById(Long id) {
+        Optional<Wallet> walletOptional = walletRepository.findById(id);
+        if (walletOptional.isPresent()){
+            return walletOptional.get();
+        } else {
+            throw new WalletNotFoundException("Wallet not found with this id");
+        }
+    }
 }

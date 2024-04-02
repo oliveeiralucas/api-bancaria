@@ -23,6 +23,17 @@ public class WalletController {
         return walletService.list();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Wallet> listById(
+            @PathVariable Long id){
+        Wallet wallet = walletService.findUserById(id);
+        if (wallet != null){
+            return ResponseEntity.ok(wallet);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     // Endpoint para consultar saldo
     @GetMapping("/{id}/balance")
     public ResponseEntity<String> getBalance(@PathVariable Long id) {
@@ -85,5 +96,12 @@ public class WalletController {
             @RequestParam int newType){
         Wallet wallet = walletService.changeType(id, newType);
         return ResponseEntity.ok("Type changed successfully: New Type: " + wallet.getType());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(
+            @PathVariable Long id){
+        Wallet wallet = walletService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
